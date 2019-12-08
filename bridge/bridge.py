@@ -18,14 +18,12 @@ def read_thread_func():
         last_changed = os.path.getmtime(get_data)
         while 1:
             if os.path.getmtime(get_data) != last_changed:
-                break
-
+                break      
         # Ask Chrome extension for the track-artist data
         sys.stdout.buffer.write(struct.pack('I', len('{"text":"get_data"}')))
 
         sys.stdout.write('{"text":"get_data"}')
         sys.stdout.flush()
-
         # Read the data from the Chrome extension
         text_length_bytes = sys.stdin.buffer.read(4)
         text_length = struct.unpack('i', text_length_bytes)[0]
