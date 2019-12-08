@@ -4,6 +4,6 @@
   "path": "bridge.bat",
   "type": "stdio",
   "allowed_origins": [
-    "chrome-extension://dnolfeogfekeklieekoeedbcbomnmice/"
+    "chrome-extension://njmlhnighdkkallgpbpomlkdadjlnbgm/"
   ]
 }
