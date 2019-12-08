@@ -5,6 +5,7 @@ var isFirst=true;
 var interval = 1000;
 var hash = hex_md5("temp");
 var current;
+var port = chrome.runtime.connect({});
 const selectors = {
   albumArt:
     '#main .Root__now-playing-bar .now-playing-bar__left .cover-art-image.cover-art-image-loaded',
@@ -33,10 +34,10 @@ var checks = {
   }
 };
 
-chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
+port.onMessage.addListener(function(msg, sender, sendResponse) {
   // When the background script asks for the current track-artist, send the data
   console.log("Received", msg);
-  chrome.runtime.sendMessage(current);
+  port.postMessage(current);
 });
 
 if (window.Notification) {
