@@ -7,6 +7,7 @@
     "notifications",
     "nativeMessaging"
   ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt9Y+BeoMhaxYrN3UaguP5yORe3VzxBXShWDqtDh+/O2H+0OmiHM3e55DJlk8A6aXP7jMWhYWBht+bO5p/0RDX21BXs/PX2RLYD2TEonAkTSHjVMHCRgdHgD9zLi4jEQpunGtEWZsSdZYE2tyeC2HfSkkfY0Uo5AYgBEG5dOL7rAw/A1yE/HHOc7HPJQ6s32FWDA85VCbUzYxUguIHqrQW3wNwLugLmqkJ3shiOgRvMubKVaxMjb8yDN8dj5d2fnQnIvSS5GLpUh2TwiyZOau1X4cXdgsdq9cUbxTvJ8vOwwvlwR1qyBQ4IdT5wABV3GfJfsTH+kiiooyp+ZttOO1hwIDAQAB",
   "content_scripts": [
     {
       "matches": ["https://open.spotify.com/*"],
