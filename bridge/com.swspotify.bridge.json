@@ -1,0 +1,9 @@
+{
+  "name": "com.swspotify.bridge",
+  "description": "Bridge to Connect Spotify Web Player to SwSpotify",
+  "path": "HOST_PATH",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://dnolfeogfekeklieekoeedbcbomnmice/"
+  ]
+}

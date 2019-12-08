@@ -4,6 +4,7 @@ var stay = 4000;
 var isFirst=true;
 var interval = 1000;
 var hash = hex_md5("temp");
+var current;
 const selectors = {
   albumArt:
     '#main .Root__now-playing-bar .now-playing-bar__left .cover-art-image.cover-art-image-loaded',
@@ -20,7 +21,6 @@ var checks = {
   art: function() {
     var $img = $('#cover-art').find('.sp-image-img');
     if ($img.length > 0) {
-     
       return document.querySelector(`${selectors.albumArt}`).style.backgroundImage;
     }
     return null;
@@ -31,10 +31,14 @@ var checks = {
   artist: function() {
     return document.querySelector(`${selectors.artistName}`).innerText;
   }
-}; 
+};
 
+chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
+  // When the background script asks for the current track-artist, send the data
+  console.log("Received", msg);
+  chrome.runtime.sendMessage(current);
+});
 
- 
 if (window.Notification) {
   console.log(alert_str, "requesting permission");
   window.Notification.requestPermission(function() {
@@ -56,17 +60,15 @@ if (window.Notification) {
           }
         }
       }
-                  
-xhr = new XMLHttpRequest();           
+xhr = new XMLHttpRequest();
 var url = "http://127.0.0.1:5042/getsong";
 xhr.open("POST", url, true);
 xhr.setRequestHeader("Content-type", "application/json");
 xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 xhr.setRequestHeader("Access-Control-Allow-Headers","*");
-xhr.onreadystatechange = function () { 
+xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200) {
         var json = JSON.parse(xhr.responseText);
-        
     }
 }
 var data = JSON.stringify({title:result.name,artist:result.artist});
@@ -78,6 +80,7 @@ if(isFirst){
       if (cont) {
         setTimeout(function() {
           hash = hex_md5(JSON.stringify(result));
+          current = result;
           if (localStorage.scn_hash !== hash) {
             localStorage.scn_hash = hash;
             console.log(alert_str, "new song", result);
@@ -97,10 +100,3 @@ if(isFirst){
     }, interval);
   });
 }
-
-
-
-
- 
-
-

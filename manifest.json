@@ -4,7 +4,8 @@
   "description": " Get lyrics of currently playing Spotify song so you don't sing along with the wrong ones and embarrass yourself later.",
   "version": "1.0",
   "permissions": [
-    "notifications"
+    "notifications",
+    "nativeMessaging"
   ],
   "content_scripts": [
     {
@@ -12,5 +13,9 @@
       "all_frames": true,
       "js": ["jquery-1.10.2.js", "md5.js", "notifications.js"]
     }
-  ]
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  }
 }
