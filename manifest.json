@@ -4,19 +4,13 @@
   "description": " Get lyrics of currently playing Spotify song so you don't sing along with the wrong ones and embarrass yourself later.",
   "version": "1.0",
   "permissions": [
-    "notifications",
-    "nativeMessaging"
+    "notifications"
   ],
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt9Y+BeoMhaxYrN3UaguP5yORe3VzxBXShWDqtDh+/O2H+0OmiHM3e55DJlk8A6aXP7jMWhYWBht+bO5p/0RDX21BXs/PX2RLYD2TEonAkTSHjVMHCRgdHgD9zLi4jEQpunGtEWZsSdZYE2tyeC2HfSkkfY0Uo5AYgBEG5dOL7rAw/A1yE/HHOc7HPJQ6s32FWDA85VCbUzYxUguIHqrQW3wNwLugLmqkJ3shiOgRvMubKVaxMjb8yDN8dj5d2fnQnIvSS5GLpUh2TwiyZOau1X4cXdgsdq9cUbxTvJ8vOwwvlwR1qyBQ4IdT5wABV3GfJfsTH+kiiooyp+ZttOO1hwIDAQAB",
   "content_scripts": [
     {
       "matches": ["https://open.spotify.com/*"],
       "all_frames": true,
       "js": ["jquery-1.10.2.js", "md5.js", "notifications.js"]
     }
-  ],
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": true
-  }
+  ]
 }
