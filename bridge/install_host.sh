@@ -29,11 +29,11 @@ mkdir -p "$TARGET_DIR"
 cp "$DIR/$HOST_NAME.json" "$TARGET_DIR"
 
 # Update host path in the manifest.
-HOST_PATH=$DIR/bridge.py
-ESCAPED_HOST_PATH=${HOST_PATH////\\/}
-sed -i -e "s/HOST_PATH/$ESCAPED_HOST_PATH/" "$TARGET_DIR/$HOST_NAME.json"
+HOST_PATH=$DIR/bridge.sh
+ESCAPED_HOST_PATH="$(echo $HOST_PATH | sed 's/ /\\ /g')"
+sed -i -e "s~HOST_PATH~$ESCAPED_HOST_PATH~" "$TARGET_DIR/$HOST_NAME.json"
 
 # Set permissions for the manifest so that all users can read it.
 chmod o+r "$TARGET_DIR/$HOST_NAME.json"
-
+chmod +x "$HOST_PATH"
 echo "Native messaging host $HOST_NAME has been installed."
