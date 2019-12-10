@@ -32,7 +32,7 @@ def read_thread_func():
         text = sys.stdin.buffer.read(text_length).decode('utf-8')
 
         # Save it to last_played so SwSpotify can access it
-        with open(last_played, "w") as f:
+        with open(last_played, "w", encoding="utf-8") as f:
             f.write(text)
 
 if __name__ == '__main__':
