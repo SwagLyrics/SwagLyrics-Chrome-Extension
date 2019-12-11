@@ -19,18 +19,17 @@ const selectors = {
 };
 
 const checks = {
-	art: function () {
+	art: () => {
 		let $img = $('#cover-art').find('.sp-image-img');
 		if ($img.length > 0) {
-
 			return document.querySelector(`${selectors.albumArt}`).style.backgroundImage;
 		}
 		return null;
 	},
-	name: function () {
+	name: () => {
 		return document.querySelector(`${selectors.trackName}`).innerText;
 	},
-	artist: function () {
+	artist: () => {
 		return document.querySelector(`${selectors.artistName}`).innerText;
 	}
 };
