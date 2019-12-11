@@ -3,7 +3,7 @@ import struct
 import sys
 import tempfile
 
-# Paths for the files used for commucation with the Chrome extension
+# Paths for the files used for communication with the Chrome extension
 get_data = os.path.join(tempfile.gettempdir(), "get_data")
 last_played = os.path.join(tempfile.gettempdir(), "last_played")
 
@@ -13,10 +13,10 @@ if sys.platform == "win32":
     msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
 
 def read_thread_func():
-    while 1:
+    while True:
         # Wait till the get_data data changes and return its values
         last_changed = os.path.getmtime(get_data)
-        while 1:
+        while True:
             if os.path.getmtime(get_data) != last_changed:
                 break
 
