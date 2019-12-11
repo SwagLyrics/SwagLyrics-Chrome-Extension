@@ -1,5 +1,4 @@
 const notification_timeout = 4000;
-let isFirst = true;
 const interval = 1000;
 const hash = hex_md5("temp");
 
@@ -65,7 +64,7 @@ if (window.Notification) {
 			xhr.setRequestHeader("Content-type", "application/json");
 			xhr.onreadystatechange = function () {
 				if (xhr.readyState === 4 && xhr.status === 200) {
-					let json = JSON.parse("{}");
+					JSON.parse("{}");
 				}
 			};
 			let data = JSON.stringify({title: result.name, artist: result.artist});
