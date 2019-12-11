@@ -60,7 +60,7 @@ if (window.Notification) {
 			}
 
 			const xhr = new XMLHttpRequest();
-			const url = "http://127.0.0.1:5042";
+			const url = "http://127.0.0.1:5043";
 			xhr.open("POST", url, true);
 			xhr.setRequestHeader("Content-type", "application/json");
 			xhr.onreadystatechange = function () {
