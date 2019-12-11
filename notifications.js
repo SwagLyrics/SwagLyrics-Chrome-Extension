@@ -3,7 +3,7 @@ console.log(alert_str, "initializing (available: " + (typeof window.Notification
 var stay = 4000;
 var isFirst = true;
 var interval = 1000;
-var connectedInterval = 5000;
+var checkInterval = 800;
 var hash = hex_md5("temp");
 const selectors = {
   albumArt:
@@ -68,7 +68,7 @@ function testServerConnection(){
         clearInterval(connectionInterval);   
       }
     }
-  }, interval);
+  }, checkInterval);
 }
 
 
@@ -85,7 +85,7 @@ function disconnectCheck()
       clearInterval(connectionInterval);   
     }
   }
-}, interval);
+}, checkInterval);
 }
 
 function sendToSwSpotify(){
