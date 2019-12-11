@@ -6,11 +6,13 @@ let ports = [];
 bridge.onMessage.addListener(function(msg) {
   // Send data from bridge to content script
   console.log("Received ", msg);
-  let port = ports[0];
+  const port = ports[0];
+
   if(port !== undefined){
     console.log(port);
     port.postMessage(msg);
-  }else{
+  }
+  else{
     bridge.postMessage("");
   }
 });
