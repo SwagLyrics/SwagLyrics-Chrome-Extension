@@ -17,6 +17,8 @@ const selectors = {
     '#main .Root__now-playing-bar .now-playing-bar__center .player-controls__buttons button:nth-child(2)',
   nextBtn:
     '#main .Root__now-playing-bar .now-playing-bar__center .player-controls__buttons button:nth-child(4)',
+  paused: "spoticon-play-16",
+  playing: "spoticon-pause-16"
 };
 var checks = {
   art: function() {
@@ -31,6 +33,13 @@ var checks = {
   },
   artist: function() {
     return document.querySelector(`${selectors.artistName}`).innerText;
+  },
+  isPlaying: function() {
+    if(document.getElementsByClassName(selectors.paused).length > 0){
+      return false;
+    }else if(document.getElementsByClassName(selectors.playing).length > 0){
+      return true;
+    }
   }
 };
 
@@ -55,7 +64,7 @@ if (window.Notification) {
       for (var i in checks) {
         if (checks.hasOwnProperty(i)) {
           text = checks[i].call();
-          if (typeof text != "undefined" && text != null && text.length > 0) {
+          if (typeof text != "undefined" && text != null && text.toString().length > 0) {
             result[i] = text;
             cont = true;
           }
@@ -96,7 +105,7 @@ if(isFirst){
               notification.close();
             }, stay);
           }
-        }, 200);
+        }, 50);
       }
     }, interval);
   });
