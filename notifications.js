@@ -3,7 +3,7 @@ console.log(alert_str, "initializing (available: " + (typeof window.Notification
 var stay = 4000;
 var isFirst = true;
 var interval = 1000;
-var checkInterval = 800;
+var checkInterval = 100;
 var hash = hex_md5("temp");
 const selectors = {
   albumArt:
@@ -58,34 +58,15 @@ if (window.Notification) {
 function testServerConnection(){
   var connectionInterval = setInterval(() => {
     console.log("Testing connection...");
-    openTestConnection();
+    openTestConnection();    
     testConnection.send();
     testConnection.onreadystatechange = function () {
-      if (testConnection.readyState == 4 && testConnection.status == 200) {
+      if (testConnection.readyState == 4 && (testConnection.status == 200 || testConnection.status == 105)) {
         console.log("Connection established");
         sendToSwSpotify();
-        disconnectCheck();
-        clearInterval(connectionInterval);   
       }
     }
   }, checkInterval);
-}
-
-
-function disconnectCheck()
-{ 
-  var connectionInterval = setInterval(() => {
-  console.log("Testing connection...");
-  openTestConnection();
-  testConnection.send();
-  testConnection.onreadystatechange = function () {
-    if (testConnection.readyState == 4 && testConnection.status != 200) {
-      console.log("Disconnected");
-      testServerConnection();
-      clearInterval(connectionInterval);   
-    }
-  }
-}, checkInterval);
 }
 
 function sendToSwSpotify(){
