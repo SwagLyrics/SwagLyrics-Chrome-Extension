@@ -3,7 +3,7 @@ console.log(alert_str, "initializing (available: " + (typeof window.Notification
 var stay = 4000;
 var isFirst = true;
 var interval = 1000;
-var checkInterval = 100;
+var checkInterval = 400;
 var hash = hex_md5("temp");
 const selectors = {
   albumArt:
