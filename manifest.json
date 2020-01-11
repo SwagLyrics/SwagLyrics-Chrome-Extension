@@ -6,6 +6,9 @@
   "permissions": [
     "notifications"
   ],
+  "icons": {
+   "128": "swaglyrics_pfp_128.png" 
+  },
   "content_scripts": [
     {
       "matches": ["https://open.spotify.com/*"],
