@@ -10,12 +10,6 @@ const selectors = {
     '#main .Root__now-playing-bar .now-playing-bar__left .cover-art-image.cover-art-image-loaded',
   trackName: '.track-info__name a',
   artistName: '.track-info__artists a',
-  playPauseBtn:
-    '#main .Root__now-playing-bar .now-playing-bar__center .player-controls__buttons button:nth-child(3)',
-  prevBtn:
-    '#main .Root__now-playing-bar .now-playing-bar__center .player-controls__buttons button:nth-child(2)',
-  nextBtn:
-    '#main .Root__now-playing-bar .now-playing-bar__center .player-controls__buttons button:nth-child(4)',
     playPauseBtnTitle:
     '#main > div > div.Root__top-container > div.Root__now-playing-bar > footer > div > div.now-playing-bar__center > div > div.player-controls__buttons > div:nth-child(3) button'
 };
@@ -144,14 +138,16 @@ function onWindowNotification() {
           if (localStorage.scn_hash !== hash) {
             localStorage.scn_hash = hash;
             console.log(alert_str, "new song", result);
-
-            xhr.send(data);
+            
+            if(xhr.status == 200){
+            xhr.send(data)
+            }
             var notification = new window.Notification(result.name, {
               body: result.artist,
               icon: result.art
             });
             setTimeout(function () {
-              notification.close();
+              notification.close.bind(notification);
             }, stay);
           }
         }, 200);
