@@ -22,13 +22,25 @@ var checks = {
     return null;
   },
   name: function () {
-    return document.querySelector(`${selectors.trackName}`).innerText;
+    element = document.querySelector(`${selectors.trackName}`);
+    if (element !== null){
+    return element.innerText;
+    }
+    return null;
   },
   artist: function () {
-    return document.querySelector(`${selectors.artistName}`).innerText;
+    element = document.querySelector(`${selectors.artistName}`);
+    if (element !== null){
+      return element.innerText;
+    }
+    return null;
   },
   playState: function () {
-    return document.querySelector(`${selectors.playPauseBtnTitle}`).getAttribute("title");
+    element = document.querySelector(`${selectors.playPauseBtnTitle}`);
+    if (element !== null){
+    return element.getAttribute("title");
+    }
+    return null;
   }
 
 };
