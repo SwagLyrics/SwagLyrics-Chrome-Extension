@@ -7,7 +7,7 @@ var checkInterval = 400;
 var hash = hex_md5("temp");
 const selectors = {
   albumArt:
-    '#main .Root__now-playing-bar .now-playing-bar__left .cover-art-image.cover-art-image-loaded',
+    '.cover-art-image',
   trackName: '.track-info__name a',
   artistName: '.track-info__artists a',
   playPauseBtnTitle:
@@ -15,9 +15,9 @@ const selectors = {
 };
 var checks = {
   art: function () {
-    var $img = $('#cover-art').find('.sp-image-img');
-    if ($img.length > 0) {
-      return document.querySelector(`${selectors.albumArt}`).style.backgroundImage;
+    var $img = $('.cover-art-image')
+    if ($img !== null) {
+      return document.querySelector(`${selectors.albumArt}`).style.backgroundImage.slice(5, -2);
     }
     return null;
   },
@@ -126,8 +126,6 @@ function onWindowNotification() {
       xhr.setRequestHeader("Content-type", "application/json");
       xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
       xhr.setRequestHeader("Access-Control-Allow-Headers", "*");
-      xhr.onreadystatechange = function () {
-      }
 
 
       var data = JSON.stringify({ title: result.name, artist: result.artist, playState: result.playState });
