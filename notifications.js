@@ -63,25 +63,24 @@ if (window.Notification) {
 
 function testServerConnection() {
   setInterval(() => {
-    console.log("Testing connection...");
-      openTestConnection();
-      testConnection.send();
-      testConnection.onreadystatechange = function () {
-        if (testConnection.readyState == 4 && (testConnection.status == 200 || testConnection.status == 105)) {
-          console.log("Connection established");
-          sendToSwSpotify();
-        }
-      }
+    checkServerConnection();
   }, checkInterval);
 }
 
-function sendToSwSpotify() {
-  xhr2 = new XMLHttpRequest();
-  const url = "http://127.0.0.1:5043/getSong";
-  xhr2.open("POST", url, true);
-  xhr2.setRequestHeader("Content-type", "application/json");
-  xhr2.setRequestHeader("Access-Control-Allow-Origin", "*");
-  xhr2.setRequestHeader("Access-Control-Allow-Headers", "*");
+
+function checkServerConnection(){
+  console.log("Testing connection...");
+  openTestConnection();
+  testConnection.send();
+  testConnection.onreadystatechange = function () {
+    if (testConnection.readyState == 4 && (testConnection.status == 200 || testConnection.status == 105)) {
+      console.log("Connection established");
+      sendToSwSpotify(getSongData(true));
+    }
+  }
+}
+
+function getSongData(asJson = false){
   let result = {};
   let text = null;
   for (let i in checks) {
@@ -93,7 +92,21 @@ function sendToSwSpotify() {
       }
     }
   }
-  const data = JSON.stringify({ title: result.name, artist: result.artist, playState: result.playState });
+  if(asJson === true){
+  return JSON.stringify({ title: result.name, artist: result.artist, playState: result.playState });
+  }
+  else {
+    return result;
+  }
+}
+
+function sendToSwSpotify(data) {
+  xhr2 = new XMLHttpRequest();
+  const url = "http://127.0.0.1:5043/getSong";
+  xhr2.open("POST", url, true);
+  xhr2.setRequestHeader("Content-type", "application/json");
+  xhr2.setRequestHeader("Access-Control-Allow-Origin", "*");
+  xhr2.setRequestHeader("Access-Control-Allow-Headers", "*");
   xhr2.send(data);
 }
 
@@ -106,31 +119,9 @@ function onWindowNotification() {
       localStorage.scn_hash = hash;
     }
     setInterval(function () {
-      let result = {};
-      let hash = null;
-      let text = null;
-      let cont = false;
-      for (let i in checks) {
-        if (checks.hasOwnProperty(i)) {
-          text = checks[i].call();
-          if (typeof text != "undefined" && text != null && text.length > 0) {
-            result[i] = text;
-            cont = true;
-          }
-        }
-      }
-
-      xhr = new XMLHttpRequest();
-      const url = "http://127.0.0.1:5042/getsong";
-      xhr.open("POST", url, true);
-      xhr.setRequestHeader("Content-type", "application/json");
-      xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-      xhr.setRequestHeader("Access-Control-Allow-Headers", "*");
-
-
-      const data = JSON.stringify({ title: result.name, artist: result.artist, playState: result.playState });
+      let result = getSongData();
       if (isFirst) {
-        xhr.send(data);
+        sendToSwSpotify(result);
         isFirst = false;
       }
 
@@ -140,10 +131,7 @@ function onWindowNotification() {
           if (localStorage.scn_hash !== hash) {
             localStorage.scn_hash = hash;
             console.log(alert_str, "new song", result);
-
-            if (xhr.status == 200) {
-              xhr.send(data)
-            }
+            sendToSwSpotify(result);
             let notification = new window.Notification(result.name, {
               body: result.artist,
               icon: result.art
