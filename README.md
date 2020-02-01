@@ -9,6 +9,6 @@ SwagLyrics Chrome Extension
 
 ### Worth to notice
 
-To improve speed of sending value to server, it is a good idea to play around `testServerConnection` function interval value, since it is how often, extension should check if server is online, for now it is set to `interval` variable.
+To improve speed of sending value to server, it is a good idea to play around `testServerConnection` function interval value, since it is how often, extension should check if server is online, for now it is set to `checkInterval` variable.
 
 
