@@ -1,10 +1,10 @@
-var alert_str = "[SwagLyrics for Spotify]";
+const alert_str = "[SwagLyrics for Spotify]";
 console.log(alert_str, "initializing (available: " + (typeof window.Notification != 'undefined') + ")");
-var stay = 4000;
-var isFirst = true;
-var interval = 1000;
-var checkInterval = 400;
-var hash = hex_md5("temp");
+const stay = 4000;
+let isFirst = true;
+const interval = 1000;
+const checkInterval = 400;
+let hash = hex_md5("temp");
 const selectors = {
   albumArt:
     '.cover-art-image',
@@ -13,9 +13,9 @@ const selectors = {
   playPauseBtnTitle:
     '#main > div > div.Root__top-container > div.Root__now-playing-bar > footer > div > div.now-playing-bar__center > div > div.player-controls__buttons > div:nth-child(3) button'
 };
-var checks = {
+const checks = {
   art: function () {
-    var $img = $('.cover-art-image')
+    let $img = $('.cover-art-image')
     if ($img !== null) {
       return document.querySelector(`${selectors.albumArt}`).style.backgroundImage.slice(5, -2);
     }
@@ -45,8 +45,8 @@ var checks = {
 
 };
 
-var testConnection = new XMLHttpRequest();
-var url = "http://127.0.0.1:5043/ping";
+const testConnection = new XMLHttpRequest();
+const url = "http://127.0.0.1:5043/ping";
 openTestConnection();
 testServerConnection();
 
@@ -77,14 +77,14 @@ function testServerConnection() {
 
 function sendToSwSpotify() {
   xhr2 = new XMLHttpRequest();
-  var url = "http://127.0.0.1:5043/getSong";
+  const url = "http://127.0.0.1:5043/getSong";
   xhr2.open("POST", url, true);
   xhr2.setRequestHeader("Content-type", "application/json");
   xhr2.setRequestHeader("Access-Control-Allow-Origin", "*");
   xhr2.setRequestHeader("Access-Control-Allow-Headers", "*");
-  var result = {};
-  var text = null;
-  for (var i in checks) {
+  let result = {};
+  let text = null;
+  for (let i in checks) {
     if (checks.hasOwnProperty(i)) {
       text = checks[i].call();
       if (typeof text != "undefined" && text != null && text.length > 0) {
@@ -93,7 +93,7 @@ function sendToSwSpotify() {
       }
     }
   }
-  var data = JSON.stringify({ title: result.name, artist: result.artist, playState: result.playState });
+  const data = JSON.stringify({ title: result.name, artist: result.artist, playState: result.playState });
   xhr2.send(data);
 }
 
@@ -106,11 +106,11 @@ function onWindowNotification() {
       localStorage.scn_hash = hash;
     }
     setInterval(function () {
-      var result = {};
-      var hash = null;
-      var text = null;
-      var cont = false;
-      for (var i in checks) {
+      let result = {};
+      let hash = null;
+      let text = null;
+      let cont = false;
+      for (let i in checks) {
         if (checks.hasOwnProperty(i)) {
           text = checks[i].call();
           if (typeof text != "undefined" && text != null && text.length > 0) {
@@ -121,14 +121,14 @@ function onWindowNotification() {
       }
 
       xhr = new XMLHttpRequest();
-      var url = "http://127.0.0.1:5042/getsong";
+      const url = "http://127.0.0.1:5042/getsong";
       xhr.open("POST", url, true);
       xhr.setRequestHeader("Content-type", "application/json");
       xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
       xhr.setRequestHeader("Access-Control-Allow-Headers", "*");
 
 
-      var data = JSON.stringify({ title: result.name, artist: result.artist, playState: result.playState });
+      const data = JSON.stringify({ title: result.name, artist: result.artist, playState: result.playState });
       if (isFirst) {
         xhr.send(data);
         isFirst = false;
@@ -144,7 +144,7 @@ function onWindowNotification() {
             if (xhr.status == 200) {
               xhr.send(data)
             }
-            var notification = new window.Notification(result.name, {
+            let notification = new window.Notification(result.name, {
               body: result.artist,
               icon: result.art
             });
