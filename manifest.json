@@ -13,7 +13,7 @@
     {
       "matches": ["https://open.spotify.com/*"],
       "all_frames": true,
-      "js": ["jquery-1.10.2.js", "md5.js", "notifications.js"]
+      "js": ["jquery-3.4.1.min.js", "md5.js", "notifications.js"]
     }
   ]
 }
