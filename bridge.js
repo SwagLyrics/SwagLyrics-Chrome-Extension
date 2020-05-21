@@ -1,23 +1,23 @@
 const alert_str = "[SwagLyrics for Spotify]";
-console.log(alert_str, "initializing (available: " + (typeof window.Notification != 'undefined') + ")");
+console.log(alert_str, " initializing");
 const stay = 4000;
 let isFirst = true;
 const interval = 1000;
 const checkInterval = 400;
-let hash = hex_md5("temp");
+let cont = false;
 const selectors = {
   albumArt:
     '.cover-art-image',
-  trackName: '.track-info__name a',
-  artistName: '.track-info__artists a',
+  trackName: 'a[data-testid="nowplaying-track-link"]',
+  artistName: 'span .react-contextmenu-wrapper span a',
   playPauseBtnTitle:
     '#main > div > div.Root__top-container > div.Root__now-playing-bar > footer > div > div.now-playing-bar__center > div > div.player-controls__buttons > div:nth-child(3) button'
 };
 const checks = {
   art: function () {
-    let $img = $('.cover-art-image')
-    if ($img !== null) {
-      return document.querySelector(`${selectors.albumArt}`).style.backgroundImage.slice(5, -2);
+    let img = document.querySelector(selectors.albumArt);
+    if (img !== null) {
+      return img.style.backgroundImage.slice(5, -2);
     }
     return null;
   },
@@ -57,10 +57,6 @@ function openTestConnection() {
   testConnection.setRequestHeader("Access-Control-Allow-Headers", "*");
 }
 
-if (window.Notification) {
-  onWindowNotification();
-}
-
 function testServerConnection() {
   setInterval(() => {
     checkServerConnection();
@@ -83,6 +79,7 @@ function checkServerConnection(){
 function getSongData(asJson = false){
   let result = {};
   let text = null;
+  cont = false;
   for (let i in checks) {
     if (checks.hasOwnProperty(i)) {
       text = checks[i].call();
@@ -108,40 +105,4 @@ function sendToSwSpotify(data) {
   xhr2.setRequestHeader("Access-Control-Allow-Origin", "*");
   xhr2.setRequestHeader("Access-Control-Allow-Headers", "*");
   xhr2.send(data);
-}
-
-
-function onWindowNotification() {
-  console.log(alert_str, "requesting permission");
-  window.Notification.requestPermission(function () {
-    console.log(alert_str, "permission granted");
-    if (!localStorage.scn_hash) {
-      localStorage.scn_hash = hash;
-    }
-    setInterval(function () {
-      let result = getSongData();
-      if (isFirst) {
-        sendToSwSpotify(result);
-        isFirst = false;
-      }
-
-      if (cont) {
-        setTimeout(function () {
-          hash = hex_md5(JSON.stringify(result));
-          if (localStorage.scn_hash !== hash) {
-            localStorage.scn_hash = hash;
-            console.log(alert_str, "new song", result);
-            sendToSwSpotify(result);
-            let notification = new window.Notification(result.name, {
-              body: result.artist,
-              icon: result.art
-            });
-            setTimeout(function () {
-              notification.close.bind(notification);
-            }, stay);
-          }
-        }, 200);
-      }
-    }, interval);
-  });
 }
