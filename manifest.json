@@ -4,7 +4,6 @@
   "description": " Get lyrics of currently playing Spotify song so you don't sing along with the wrong ones and embarrass yourself later.",
   "version": "1.0",
   "permissions": [
-    "notifications",
     "http://127.0.0.1/*"
   ],
   "icons": {
@@ -14,8 +13,7 @@
     {
       "matches": ["https://open.spotify.com/*"],
       "all_frames": true,
-      "js": ["jquery-3.4.1.min.js", "md5.js", "notifications.js"]
+      "js": ["bridge.js"]
     }
   ]
 }
-
