@@ -5,14 +5,17 @@ let isFirst = true;
 const interval = 1000;
 const checkInterval = 400;
 let hash = hex_md5("temp");
+
 const selectors = {
   albumArt:
     '.cover-art-image',
-  trackName: '.track-info__name a',
-  artistName: '.track-info__artists a',
+  trackName: 'div.now-playing-bar__left div.now-playing div._2d35c1726829c507fca5a9b5b1aae1a2-scss.ellipsis-one-line div.c319b99793755cc3bba709fe1b1fda42-scss.ellipsis-one-line div.react-contextmenu-wrapper span a',
+  artistName: 'div.now-playing-bar__left div.now-playing div._2d35c1726829c507fca5a9b5b1aae1a2-scss.ellipsis-one-line div._44843c8513baccb36b3fa171573a128f-scss.ellipsis-one-line span span.react-contextmenu-wrapper span a',
   playPauseBtnTitle:
     '#main > div > div.Root__top-container > div.Root__now-playing-bar > footer > div > div.now-playing-bar__center > div > div.player-controls__buttons > div:nth-child(3) button'
 };
+
+
 const checks = {
   art: function () {
     let $img = $('.cover-art-image')

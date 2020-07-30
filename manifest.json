@@ -4,7 +4,8 @@
   "description": " Get lyrics of currently playing Spotify song so you don't sing along with the wrong ones and embarrass yourself later.",
   "version": "1.0",
   "permissions": [
-    "notifications"
+    "notifications",
+    "http://127.0.0.1/*"
   ],
   "icons": {
    "128": "swaglyrics_pfp_128.png" 
